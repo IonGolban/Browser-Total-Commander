@@ -1,0 +1,58 @@
+{#Realizati o pagina web care sa aiba backend-ul scris complet în Python, și care sa mimeze#}
+{#comportamentul unui tool similar cu Total Commander. Backend-ul va fi rulat pe masina#}
+{#curentă iar site-ul va fi accesat pe 127.0.0.1. Interfața web trebuie sa suporte următoarele#}
+{#funcții:#}
+{#● Copiere fișiere / foldere (inclusiv selecție de fișiere/ foldere)#}
+{#● Stergere fișiere / foldere (inclusiv selecție de fișiere/ foldere)#}
+{#● Mutare/Redenumire fișiere / foldere (inclusiv selecție de fișiere/ foldere)#}
+{#● Creare fisier#}
+{#● Creare folder#}
+{#● Editare fisiere text#}
+{#Interfața web va avea doua panel-uri în care se vizualizeaza fișiere și sub-folderele dintr-un#}
+{#folder (inclusiv cu informații despre dimensiunea fișierelor , respectiv date-time la care au fost#}
+{#create). Fiecare panel permite navigarea prin folderul curent, iar operatiile intre fisiere /#}
+{#foldere / etc se aplica intre cele doua panel-uri.#}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tool similar cu Total Commander</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div id="jsonData" data-json="{{ jsonData }}"></div>
+
+<header>
+    <h1>TURBAT COMMANDER</h1>
+</header>
+
+
+
+    <div class="panels">
+        <div class="panel" id="panel1">
+            <h2 class = "main-dir-name" id = "main-dir-name1"></h2>
+            <ul id="files-folders-list-1">
+
+            </ul>
+        </div>
+        <div class="buttons">
+        <button id="copy-button">Copy</button>
+        <button id="move-button">Move</button>
+        <button id="delete-button">Delete</button>
+        <button id="rename-button">Rename</button>
+        <button id="create-file-button">Create file</button>
+        <button id="create-folder-button">Create folder</button>
+        <button id="edit-file-button">Edit file</button>
+        </div>
+        <div class="panel" id="panel2">
+            <h2 class = "main-dir-name" id = "main-dir-name2"></h2>
+            <ul id="files-folders-list-2">
+
+            </ul>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='/js/index.js') }}"></script>
+</body>
+</html>

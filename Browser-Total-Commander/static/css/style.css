@@ -1,0 +1,87 @@
+
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto';
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #265073;
+}
+
+header {
+    background-color: #2D9596;
+    color: #ECF4D6;
+    padding: 20px;
+    text-align: center;
+}
+
+.buttons {
+    display: grid;
+    justify-content: space-between;
+    padding: 20px;
+
+}
+
+.buttons button {
+    padding: 5px;
+    border-radius: 5px;
+
+    height: 100px;
+
+
+    border: none;
+    cursor: pointer;
+    background-color: #2D9596;
+    color: #fff;
+    font-size: 16px;
+}
+
+.panels {
+
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+
+.panel {
+    border: 1px solid;
+    border-radius: 5px;
+    width: 20%;
+    padding: 10px;
+    background-color: #2D9596;
+}
+
+#files-folders-list-1,
+#files-folders-list-2 {
+    list-style: none;
+    padding: 0;
+}
+
+#files-folders-list-1 li,
+#files-folders-list-2 li {
+    margin-bottom: 5px;
+    cursor: pointer;
+    background-color: #8ACDD7;
+    border-color: #B6BBC4;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    padding: 5px;
+
+}
+
+
+#files-folders-list-1 li.selected,
+#files-folders-list-2 li.selected {
+    background-color: #B6BBC4;
+}
+
+
+#files-folders-list-1 li:hover,
+#files-folders-list-2 li:hover {
+    background-color: #ECF4D6;
+}
