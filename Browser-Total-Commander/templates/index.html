@@ -28,12 +28,17 @@
 </header>
 <div class="panels">
     <div class="panel" id="panel1">
-        <h2 class="main-dir-name" id="main-dir-name1">{{ jsonData.main_dir_name }}</h2>
+        <h2 class="main-dir-name" id="main-dir-name1">{{ jsonData.panel_1.path }}</h2>
         <ul id="files-folders-list-1" class="">
-            {% for element in jsonData.data %}
+            <li class="list-group-item" id="parent_dir-1" data-type="folder">
+                <img src="/static/img/dir.png" alt="dir">
+                <span>..</span>
+            </li>
+
+            {% for element in jsonData.panel_1.data %}
                 <li class="list-group-item" id="{{ element.name }}-1" data-type="{{ element.type }}">
                     <img src="/static/img/{{ element.type }}.png" alt="{{ element.type }}">
-                    <span>{{ element.name }}</span>
+                    <span class="path">{{ element.name }}</span>
                     <div class="details">
                         <span class="size">{{ element.size }}</span>
                         <span class="date">{{ element.date }}</span>
@@ -52,9 +57,13 @@
         <button id="edit-file-button">Edit file</button>
     </div>
     <div class="panel" id="panel2">
-        <h2 class="main-dir-name" id="main-dir-name2"></h2>
+        <h2 class="main-dir-name" id="main-dir-name2">{{ jsonData.panel_2.path }}</h2>
         <ul id="files-folders-list-2">
-            {% for element in jsonData.data %}
+            <li class="list-group-item" id="parent_dir-2" data-type="folder">
+                <img src="/static/img/dir.png" alt="dir">
+                <span>..</span>
+            </li>
+            {% for element in jsonData.panel_2.data %}
                 <li class="list-group-item" id="{{ element.name }}-2" data-type="{{ element.type }}">
                     <img src="/static/img/{{ element.type }}.png" alt="{{ element.type }}">
                     <span>{{ element.name }}</span>

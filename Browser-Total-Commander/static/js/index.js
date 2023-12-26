@@ -13,6 +13,8 @@
 // create). Fiecare panel permite navigarea prin folderul curent, iar operatiile intre fisiere /
 // foldere / etc se aplica intre cele doua panel-uri.
 
+const url = 'http://localhost:5000/';
+
 document.addEventListener('DOMContentLoaded', () => {
     // const dataJsonString = document.getElementById('jsonData').getAttribute('data-json');
     // const dataJson = JSON.parse(dataJsonString);
@@ -28,15 +30,14 @@ function init_panel(data_json, panel_id) {
     const main_dir = data_json.main_dir_name;
     const files_folders_data = data_json.data;
 
-    let list = document.getElementById('files-folders-list-'+panel_id);
+    let list = document.getElementById('files-folders-list-' + panel_id);
     list.innerHTML = "";
     list.setAttribute('path', main_dir)
     list.setAttribute('panel-id', panel_id)
     createListElements(list, files_folders_data);
 
 
-
-    document.getElementById('main-dir-name'+ panel_id).innerHTML = main_dir;
+    document.getElementById('main-dir-name' + panel_id).innerHTML = main_dir;
 
     addClickListeners();
 }
@@ -52,49 +53,11 @@ function createListElements(list, elements) {
 function addClickListeners() {
     const listItems = document.querySelectorAll('.list-group-item');
     console.log("listItems = ", listItems);
-    listItems.forEach((item)  => {
+    listItems.forEach((item) => {
         console.log(item.id)
         item.addEventListener('click', click_element_handler);
         item.addEventListener('dblclick', dbl_click_element_handler)
     });
-}
-
-
-
-function create_li_element(element, list) {
-        let li = document.createElement('li');
-        li.setAttribute('class', 'list-group-item');
-        li.setAttribute('id', element.name + list.id.substring(18));
-        li.setAttribute('data-type', element.type)
-
-
-
-        let name = document.createElement('span');
-        name.innerHTML = element.name;
-
-        let img = document.createElement('img');
-        img.setAttribute('src', "/static/img/" + element.type + ".png");
-
-        let details = document.createElement('div')
-        details.setAttribute('class', 'details')
-
-        let size = document.createElement('span')
-        size.setAttribute('class', 'size')
-        size.innerHTML = element.size
-
-        let date = document.createElement('span')
-        date.setAttribute('class', 'date')
-        date.innerHTML = element.date
-
-
-        details.appendChild(size)
-        details.appendChild(date)
-
-        li.appendChild(img);
-        li.appendChild(name);
-        li.appendChild(details);
-
-        return li
 }
 
 function dbl_click_element_handler(event) {
@@ -104,11 +67,23 @@ function dbl_click_element_handler(event) {
     }
     // if(event.target.parentElement.className === '') {
 
-    const list = clickedElement.parentElement;
-    console.log(list.getAttribute('path'))
-    const path = clickedElement.id.substring(0, clickedElement.id.length - list.length)
-    console.log(path)
+    const el_id = clickedElement.id;
+    console.log(el_id)
+    console.log(el_id.substring(0, el_id.length - 2))
+    const goto_dir_encoded = encodeURIComponent(el_id.substring(0, el_id.length - 2));
+    console.log("encoded", goto_dir_encoded)
+    const dir_name_1_encoded = encodeURIComponent(document.getElementById("main-dir-name1").innerHTML);
+    const dir_name_2_encoded = encodeURIComponent(document.getElementById("main-dir-name2").innerHTML);
+    const panel_changed_id = clickedElement.parentElement.parentElement.getAttribute('id')
+
+// /goto/<panel_change>/<main_dir_1>/<main_dir_2>/<goto_dir>
+
+    let go_to_url = url + 'goto/' + panel_changed_id + '/' + dir_name_1_encoded + '/' + dir_name_2_encoded + '/' + goto_dir_encoded;
+    window.location.href = go_to_url;
+
+
 }
+
 function click_element_handler(event) {
     let clickedElement = event.target;
 
@@ -117,6 +92,7 @@ function click_element_handler(event) {
     if (clickedElement.tagName.toLowerCase() !== 'li') {
         clickedElement = clickedElement.closest('li.list-group-item');
     }
+
 
     if (!isCtrlPressed) {
         const selectedItems = document.querySelectorAll('.selected');

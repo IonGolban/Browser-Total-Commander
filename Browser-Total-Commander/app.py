@@ -7,23 +7,53 @@ app = Flask(__name__)
 
 @app.route('/')
 def init_page():
-    main_dir_name = dir_service.get_main_dir()
-    data = dir_service.get_all_from_dir(main_dir_name)
+    start_dir_name = dir_service.get_start_dir()
+    data = dir_service.get_all_from_path(start_dir_name)
     response_data = dict()
-    response_data['data'] = data
-    response_data['main_dir_name'] = main_dir_name
+    response_data['panel_1'] = dict()
+    response_data['panel_2'] = dict()
+    response_data['panel_1']['path'] = start_dir_name
+    response_data['panel_2']['path'] = start_dir_name
+    response_data['panel_1']['data'] = data
+    response_data['panel_2']['data'] = data
+
     print(response_data)
     return render_template('index.html', jsonData=response_data)
 
 
-@app.route('/dir/elements/<path>', methods=["GET"])
-def gat_all_from_dir(path):
-    data = dir_service.get_all_from_dir(path)
-    response_data = dict()
-    response_data['data'] = data
-    response_data['main_dir_name'] = path
+#
+# @app.route('/dir/elements/<path>', methods=["GET"])
+# def gat_all_from_dir(path):
+#     data = dir_service.get_all_from_dir(path)
+#     response_data = dict()
+#     response_data['data'] = data
+#     response_data['main_dir_name_1'] = path
+#     response_data['main_dir_name_2'] = path
+#
+#     return json.dumps(response_data)
 
-    return json.dumps(response_data)
+@app.route('/goto/<panel_change>/<main_dir_1>/<main_dir_2>/<goto_dir>', methods=["GET"])
+def goto(panel_change, main_dir_1, main_dir_2, goto_dir):
+    print(panel_change, main_dir_1, main_dir_2, goto_dir)
+    data = dict()
+    data['panel_1'] = dict()
+    data['panel_2'] = dict()
+
+    if panel_change == "panel1":
+        new_main_dir_1, elements_panel1 = dir_service.get_all_from_dir(main_dir_1, goto_dir)
+        print(new_main_dir_1, elements_panel1)
+        data['panel_1']['path'] = new_main_dir_1
+        data['panel_1']['data'] = elements_panel1
+        data['panel_2']['path'] = main_dir_2
+        data['panel_2']['data'] = dir_service.get_all_from_path(main_dir_2)
+    else:
+        new_main_dir_2, elements_panel2 = dir_service.get_all_from_dir(main_dir_2, goto_dir)
+        data['panel_1']['path'] = main_dir_1
+        data['panel_1']['data'] = dir_service.get_all_from_path(main_dir_1)
+        data['panel_2']['path'] = new_main_dir_2
+        data['panel_2']['data'] = elements_panel2
+
+    return render_template('index.html', jsonData=data)
 
 
 if __name__ == '__main__':
