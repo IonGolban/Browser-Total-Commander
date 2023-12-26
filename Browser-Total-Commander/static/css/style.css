@@ -63,6 +63,9 @@ header {
 
 #files-folders-list-1 li,
 #files-folders-list-2 li {
+    display: flex;
+    align-items: center;
+
     margin-bottom: 5px;
     cursor: pointer;
     background-color: #8ACDD7;
@@ -71,7 +74,6 @@ header {
     border-width: 1px;
     border-radius: 5px;
     padding: 5px;
-
 }
 
 
@@ -84,4 +86,25 @@ header {
 #files-folders-list-1 li:hover,
 #files-folders-list-2 li:hover {
     background-color: #ECF4D6;
+}
+
+#files-folders-list-1 li img,
+#files-folders-list-2 li img {
+    max-width: 30px;
+    height: auto;
+}
+
+#files-folders-list-1 li span,
+#files-folders-list-2 li span{
+    flex-grow: 1; /* Ocupă spațiul disponibil pentru a fi în centru */
+    text-align: center;
+    font-weight: bold;
+}
+
+#files-folders-list-1 li .details,
+#files-folders-list-2 li .details{
+    text-align: right;
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
 }

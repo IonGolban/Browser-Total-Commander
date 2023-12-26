@@ -1,6 +1,7 @@
 import os
 import sys
 import shutil
+import time
 
 
 def create_directory(path, directory_name):
@@ -29,4 +30,15 @@ def get_main_dir():
 
 
 def get_all_from_dir(path):
-    return os.listdir(path)
+    elements_list = os.listdir(path)
+    response_list = list()
+    for element in elements_list:
+        response_el = dict()
+        response_el["name"] = element
+        response_el["path"] = os.path.join(path, element)
+        response_el["size"] = os.path.getsize(os.path.join(path, element))
+        response_el["date"] = time.strftime('%m/%d/%Y', time.gmtime(os.path.getmtime(os.path.join(path, element))))
+        response_el["type"] = "dir" if os.path.isdir(os.path.join(path, element)) else "file"
+        response_list.append(response_el)
+
+    return response_list

@@ -12,14 +12,25 @@ def init_page():
     response_data = dict()
     response_data['data'] = data
     response_data['main_dir_name'] = main_dir_name
+    print(response_data)
+    return render_template('index.html', jsonData=response_data)
 
-    return render_template('index.html', jsonData=json.dumps(response_data))
+
+@app.route('/dir/elements/<path>', methods=["GET"])
+def gat_all_from_dir(path):
+    data = dir_service.get_all_from_dir(path)
+    response_data = dict()
+    response_data['data'] = data
+    response_data['main_dir_name'] = path
+
+    return json.dumps(response_data)
 
 
 if __name__ == '__main__':
     from waitress import serve
 
-    serve(app, host="0.0.0.0", port=8080)
+    app.config['DEBUG'] = True
+    serve(app, host="0.0.0.0", port=8080, debug=True)
 
 
 def format_data(data):

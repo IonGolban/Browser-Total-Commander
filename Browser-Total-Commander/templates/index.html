@@ -26,17 +26,23 @@
 <header>
     <h1>TURBAT COMMANDER</h1>
 </header>
-
-
-
-    <div class="panels">
-        <div class="panel" id="panel1">
-            <h2 class = "main-dir-name" id = "main-dir-name1"></h2>
-            <ul id="files-folders-list-1">
-
-            </ul>
-        </div>
-        <div class="buttons">
+<div class="panels">
+    <div class="panel" id="panel1">
+        <h2 class="main-dir-name" id="main-dir-name1">{{ jsonData.main_dir_name }}</h2>
+        <ul id="files-folders-list-1" class="">
+            {% for element in jsonData.data %}
+                <li class="list-group-item" id="{{ element.name }}-1" data-type="{{ element.type }}">
+                    <img src="/static/img/{{ element.type }}.png" alt="{{ element.type }}">
+                    <span>{{ element.name }}</span>
+                    <div class="details">
+                        <span class="size">{{ element.size }}</span>
+                        <span class="date">{{ element.date }}</span>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="buttons">
         <button id="copy-button">Copy</button>
         <button id="move-button">Move</button>
         <button id="delete-button">Delete</button>
@@ -44,15 +50,23 @@
         <button id="create-file-button">Create file</button>
         <button id="create-folder-button">Create folder</button>
         <button id="edit-file-button">Edit file</button>
-        </div>
-        <div class="panel" id="panel2">
-            <h2 class = "main-dir-name" id = "main-dir-name2"></h2>
-            <ul id="files-folders-list-2">
-
-            </ul>
-        </div>
     </div>
-
-    <script src="{{ url_for('static', filename='/js/index.js') }}"></script>
+    <div class="panel" id="panel2">
+        <h2 class="main-dir-name" id="main-dir-name2"></h2>
+        <ul id="files-folders-list-2">
+            {% for element in jsonData.data %}
+                <li class="list-group-item" id="{{ element.name }}-2" data-type="{{ element.type }}">
+                    <img src="/static/img/{{ element.type }}.png" alt="{{ element.type }}">
+                    <span>{{ element.name }}</span>
+                    <div class="details">
+                        <span class="size">{{ element.size }}</span>
+                        <span class="date">{{ element.date }}</span>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 </body>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </html>
