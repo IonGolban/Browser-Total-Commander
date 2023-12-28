@@ -46,6 +46,7 @@ def get_all_from_path(path):
         response_el["type"] = "dir" if os.path.isdir(os.path.join(path, element)) else "file"
 
         if response_el["type"] == "dir":
+            print("dir ", element)
             response_el["size"] = "<<DIR>>"
         else:
             response_el["size"] = os.path.getsize(os.path.join(path, element))
@@ -78,3 +79,13 @@ def get_all_from_dir(current_main_path, to_dir):
     elements_from_dir = get_all_from_path(updated_main_path)
 
     return updated_main_path, elements_from_dir
+
+
+def rename(old_name_path, new_name_path):
+    if not os.path.exists(old_name_path):
+        raise Exception("Path does not exist")
+
+    if not os.access(old_name_path, os.W_OK):
+        raise Exception("You don't have permission to rename this file")
+
+    os.rename(old_name_path, new_name_path)

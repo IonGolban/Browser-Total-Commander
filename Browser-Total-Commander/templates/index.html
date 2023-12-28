@@ -19,6 +19,7 @@
     <meta charset="UTF-8">
     <title>Tool similar cu Total Commander</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rename-modal.css') }}">
 </head>
 <body>
 <div id="jsonData" data-json="{{ jsonData }}"></div>
@@ -29,7 +30,7 @@
 <div class="panels">
     <div class="panel" id="panel1">
         <h2 class="main-dir-name" id="main-dir-name1">{{ jsonData.panel_1.path }}</h2>
-        <ul id="files-folders-list-1" class="">
+        <ul id="files-folders-list-1" path = "{{ jsonData.panel_2.path }}">
             <li class="list-group-item" id="parent_dir-1" data-type="folder">
                 <img src="/static/img/dir.png" alt="dir">
                 <span>..</span>
@@ -58,7 +59,7 @@
     </div>
     <div class="panel" id="panel2">
         <h2 class="main-dir-name" id="main-dir-name2">{{ jsonData.panel_2.path }}</h2>
-        <ul id="files-folders-list-2">
+        <ul id="files-folders-list-2" path = "{{ jsonData.panel_2.path }}">
             <li class="list-group-item" id="parent_dir-2" data-type="folder">
                 <img src="/static/img/dir.png" alt="dir">
                 <span>..</span>
@@ -75,6 +76,14 @@
             {% endfor %}
         </ul>
     </div>
+</div>
+<div id="rename-modal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="close-rename-modal">&times;</span>
+      <p id="old-name-rename-modal"></p>
+      <input type="text" id="new-rename-modal" placeholder="New name">
+      <button id="confirm-rename-modal-button">Rename</button>
+  </div>
 </div>
 </body>
 <script src="{{ url_for('static', filename='js/index.js') }}"></script>

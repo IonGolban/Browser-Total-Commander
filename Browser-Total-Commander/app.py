@@ -4,16 +4,18 @@ import json
 
 app = Flask(__name__)
 
+my_test_dir = r"C:\Users\Public\Desktop\garb_files"
+
 
 @app.route('/')
 def init_page():
-    start_dir_name = dir_service.get_start_dir()
-    data = dir_service.get_all_from_path(start_dir_name)
+    # start_dir_name = dir_service.get_start_dir()
+    data = dir_service.get_all_from_path(my_test_dir)
     response_data = dict()
     response_data['panel_1'] = dict()
     response_data['panel_2'] = dict()
-    response_data['panel_1']['path'] = start_dir_name
-    response_data['panel_2']['path'] = start_dir_name
+    response_data['panel_1']['path'] = my_test_dir
+    response_data['panel_2']['path'] = my_test_dir
     response_data['panel_1']['data'] = data
     response_data['panel_2']['data'] = data
 
@@ -52,6 +54,20 @@ def goto(panel_change, main_dir_1, main_dir_2, goto_dir):
         data['panel_1']['data'] = dir_service.get_all_from_path(main_dir_1)
         data['panel_2']['path'] = new_main_dir_2
         data['panel_2']['data'] = elements_panel2
+
+    return render_template('index.html', jsonData=data)
+
+
+@app.route('/rename/<main_dir_1>/<main_dir_2>/<old_name_path>/<new_name_path>', methods=["GET"])
+def rename(main_dir_1, main_dir_2, old_name_path, new_name_path):
+    dir_service.rename(old_name_path, new_name_path)
+    data = dict()
+    data['panel_1'] = dict()
+    data['panel_2'] = dict()
+    data['panel_1']['path'] = main_dir_1
+    data['panel_1']['data'] = dir_service.get_all_from_path(main_dir_1)
+    data['panel_2']['path'] = main_dir_2
+    data['panel_2']['data'] = dir_service.get_all_from_path(main_dir_2)
 
     return render_template('index.html', jsonData=data)
 

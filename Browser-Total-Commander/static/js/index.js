@@ -15,12 +15,16 @@
 
 const url = 'http://localhost:5000/';
 
+const rename_button = document.getElementById('rename-button');
+
 document.addEventListener('DOMContentLoaded', () => {
     // const dataJsonString = document.getElementById('jsonData').getAttribute('data-json');
     // const dataJson = JSON.parse(dataJsonString);
     // // console.log(dataJson);
     // // init_panel(dataJson, 1);
     // // init_panel(dataJson, 2);
+
+    console.log(jsonData)
 
     addClickListeners();
 
@@ -111,3 +115,66 @@ function click_element_handler(event) {
 
     console.log(`Element clicked: ${clickedElementID}, Selected: ${isSelected}`);
 }
+
+rename_button.addEventListener('click', () => {
+    const selectedItems = document.querySelectorAll('.selected');
+    if (selectedItems.length !== 1) {
+        alert("Please select one item to rename")
+        return;
+    }
+
+    let modal = document.getElementById('rename-modal');
+    let old_name = selectedItems[0].id.substring(0, selectedItems[0].id.length - 2);
+    let modal_old_name = document.getElementById('old-name-rename-modal');
+    modal_old_name.innerHTML = "Old-name: " + old_name;
+
+    modal.style.display = 'block';
+});
+
+document.getElementById('close-rename-modal').addEventListener('click', () => {
+    let modal = document.getElementById('rename-modal');
+    modal.style.display = 'none';
+    console.log("close-rename-modal")
+});
+
+document.getElementById("confirm-rename-modal-button").addEventListener('click', () => {
+    let new_name = document.getElementById('new-rename-modal').value;
+    if (new_name === "") {
+        alert("Please enter a new name")
+        return;
+    }
+
+    const selectedItem = document.querySelectorAll('.selected')[0];
+    let old_name = selectedItem.id.substring(0, selectedItem.id.length - 2);
+
+    if (new_name === old_name) {
+        alert("Please enter a new name")
+        return;
+    }
+    // list-group-item
+    let all_elements = document.querySelectorAll('.list-group-item');
+    for (let element of all_elements) {
+        if (element.parentElement.getAttribute('id') === selectedItem.parentElement.getAttribute('id')
+        && element.id.substring(0, element.id.length - 2) === new_name) {
+            alert("Name already exists")
+            return;
+        }
+    }
+
+    let main_dir_name = selectedItem.parentElement.getAttribute('path');
+
+    let element_id = selectedItem.id;
+
+    // @app.route('/rename/<main_dir_1>/<main_dir_2>/<old_name_path>/<new_name_path>', methods=["GET"])
+    const dir_name_1_encoded = encodeURIComponent(document.getElementById("main-dir-name1").innerHTML);
+    const dir_name_2_encoded = encodeURIComponent(document.getElementById("main-dir-name2").innerHTML);
+    const old_name_encoded = encodeURIComponent(main_dir_name + "\\" + old_name);
+    const new_name_encoded = encodeURIComponent(main_dir_name + "\\" + new_name);
+
+    let rename_url = url + 'rename/' + dir_name_1_encoded + '/' + dir_name_2_encoded + '/' + old_name_encoded + '/' + new_name_encoded;
+
+    window.location.href = rename_url;
+
+});
+
+
