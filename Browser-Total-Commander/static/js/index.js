@@ -14,9 +14,15 @@
 // foldere / etc se aplica intre cele doua panel-uri.
 
 const url = 'http://localhost:5000/';
+const panel1 = document.getElementById('panel1');
+const panel2 = document.getElementById('panel2');
+const main_dir_name1 = document.getElementById('main-dir-name1');
+const main_dir_name2 = document.getElementById('main-dir-name2');
 
 const rename_button = document.getElementById('rename-button');
-
+const copy_button = document.getElementById('copy-button');
+const move_button = document.getElementById('move-button');
+const delete_button = document.getElementById('delete-button');
 document.addEventListener('DOMContentLoaded', () => {
     // const dataJsonString = document.getElementById('jsonData').getAttribute('data-json');
     // const dataJson = JSON.parse(dataJsonString);
@@ -98,6 +104,7 @@ function click_element_handler(event) {
     }
 
 
+
     if (!isCtrlPressed) {
         const selectedItems = document.querySelectorAll('.selected');
         console.log(selectedItems)
@@ -155,13 +162,15 @@ document.getElementById("confirm-rename-modal-button").addEventListener('click',
     let all_elements = document.querySelectorAll('.list-group-item');
     for (let element of all_elements) {
         if (element.parentElement.getAttribute('id') === selectedItem.parentElement.getAttribute('id')
-        && element.id.substring(0, element.id.length - 2) === new_name) {
+            && element.id.substring(0, element.id.length - 2) === new_name) {
             alert("Name already exists")
             return;
         }
     }
 
     let main_dir_name = selectedItem.parentElement.getAttribute('path');
+
+    console.log("main_dir_name", main_dir_name)
 
     let element_id = selectedItem.id;
 
@@ -177,4 +186,80 @@ document.getElementById("confirm-rename-modal-button").addEventListener('click',
 
 });
 
+copy_button.addEventListener('click', async () => {
+    await generic_fetch_request_button('copy')
+});
 
+move_button.addEventListener('click', async () => {
+    await generic_fetch_request_button('move')
+});
+
+delete_button.addEventListener('click', async () => {
+    await generic_fetch_request_button('delete')
+});
+
+
+async function generic_fetch_request_button(type) {
+    const selectedItems = document.querySelectorAll('.selected');
+
+    const MEHTOD = type === 'delete' ? 'DELETE' : 'POST';
+
+    if (selectedItems.length === 0) {
+        alert("Please select at least one item to copy")
+        return;
+    }
+
+    const panel_id_from_copy = selectedItems[0].parentElement.parentElement.getAttribute('id');
+
+    for (selectedItem of selectedItems) {
+        if (selectedItem.parentElement.parentElement.getAttribute('id') !== panel_id_from_copy) {
+            alert("Ignore deleting: Please select items from the same panel")
+            return;
+        }
+    }
+
+    let elements_to_copy = [];
+    for (selectedItem of selectedItems) {
+        elements_to_copy.push(selectedItem.id.substring(0, selectedItem.id.length - 2));
+    }
+
+    console.log(elements_to_copy);
+    let main_dir_name_from_copy = "";
+    let main_dir_name_to_copy = "";
+    if (panel_id_from_copy === 'panel1') {
+        main_dir_name_from_copy = document.getElementById("main-dir-name1").innerHTML;
+        main_dir_name_to_copy = document.getElementById("main-dir-name2").innerHTML;
+    } else {
+        main_dir_name_from_copy = document.getElementById("main-dir-name2").innerHTML;
+        main_dir_name_to_copy = document.getElementById("main-dir-name1").innerHTML;
+    }
+    const main_dir_name_from_copy_encoded = encodeURIComponent(main_dir_name_from_copy);
+
+    const main_dir_name_to_copy_encoded = encodeURIComponent(main_dir_name_to_copy);
+    const request_url = url + type + '/' + main_dir_name_from_copy_encoded + (type !== "delete" ? '/' + main_dir_name_to_copy_encoded : "");
+    console.log(request_url)
+    await fetch(request_url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({elements: elements_to_copy}),
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            alert('Network response was not ok.');
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            console.log('Server response:', data);
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
+
+    // window.location.href = window.location.href;
+    // window.location.reload();
+
+}

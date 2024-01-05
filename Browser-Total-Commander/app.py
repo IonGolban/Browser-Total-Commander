@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from services import dir_service, file_service
 import json
 
@@ -70,6 +70,71 @@ def rename(main_dir_1, main_dir_2, old_name_path, new_name_path):
     data['panel_2']['data'] = dir_service.get_all_from_path(main_dir_2)
 
     return render_template('index.html', jsonData=data)
+
+
+@app.route('/copy/<main_dir_from_copy>/<main_dir_to_copy>', methods=["POST"])
+def copy(main_dir_from_copy, main_dir_to_copy):
+    if request.method == 'POST':
+
+        if main_dir_to_copy == main_dir_from_copy:
+            return jsonify({'error': 'Invalid request, same directory'})
+
+        data = request.get_json()
+        elements_to_copy = data.get('elements', [])
+
+        print(elements_to_copy)
+        print(main_dir_from_copy, main_dir_to_copy)
+        try:
+            file_service.copy_all(main_dir_from_copy, main_dir_to_copy, elements_to_copy, replace=False,
+                                  delete_after=False)
+        except Exception as e:
+            print(e)
+            return jsonify({'error': str(e)})
+
+        return jsonify({'message': 'Data received successfully'})
+
+    return jsonify({'error': 'Invalid request'})
+
+
+@app.route('/move/<main_dir_from_move>/<main_dir_to_move>', methods=["POST"])
+def move(main_dir_from_move, main_dir_to_move):
+    if request.method == 'POST':
+        if main_dir_to_move == main_dir_from_move:
+            return jsonify({'error': 'Invalid request, same directory'})
+
+        data = request.get_json()
+        elements_to_move = data.get('elements', [])
+
+        print(elements_to_move)
+        print(main_dir_from_move, main_dir_to_move)
+        try:
+            file_service.copy_all(main_dir_from_move, main_dir_to_move, elements_to_move, replace=False,
+                                  delete_after=True)
+        except Exception as e:
+            print(e)
+            return jsonify({'error': str(e)})
+
+        return jsonify({'message': 'Data received successfully'})
+
+    return jsonify({'error': 'Invalid request'})
+
+
+@app.route('/delete/<main_dir_delete>', methods=["POST"])
+def delete(main_dir_delete):
+    print(main_dir_delete)
+    data = request.get_json()
+    elements_to_delete = data.get('elements', [])
+    print(elements_to_delete)
+    print(main_dir_delete)
+    try:
+        file_service.delete_all(main_dir_delete, elements_to_delete)
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)})
+
+    return jsonify({'message': 'Data received successfully'})
+
+# return jsonify({'error': 'Invalid request'})
 
 
 if __name__ == '__main__':

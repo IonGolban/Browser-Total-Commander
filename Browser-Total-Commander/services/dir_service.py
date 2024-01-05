@@ -15,6 +15,8 @@ def create_directory(path, directory_name):
 
 
 def delete_directory(path):
+    if not os.path.exists(path):
+        raise Exception("Directory does not exist")
     try:
         os.rmdir(path)
     except Exception as e:
@@ -39,8 +41,8 @@ def get_all_from_path(path):
         return []
     response_list = []
     for element in elements_list:
-        if not os.access(os.path.join(path, element), os.R_OK):
-            continue
+        # if not os.access(os.path.join(path, element), os.R_OK):
+        #     continue
 
         response_el = dict()
         response_el["type"] = "dir" if os.path.isdir(os.path.join(path, element)) else "file"
@@ -82,6 +84,7 @@ def get_all_from_dir(current_main_path, to_dir):
 
 
 def rename(old_name_path, new_name_path):
+    print(old_name_path, new_name_path)
     if not os.path.exists(old_name_path):
         raise Exception("Path does not exist")
 
