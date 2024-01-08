@@ -19,7 +19,7 @@
     <meta charset="UTF-8">
     <title>Tool similar cu Total Commander</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/rename-modal.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
 </head>
 <body>
 <div id="jsonData" data-json="{{ jsonData }}"></div>
@@ -28,10 +28,13 @@
     <h1>TURBAT COMMANDER</h1>
 </header>
 <div class="panels">
-    <div class="panel" id="panel1">
-        <h2 class="main-dir-name" id="main-dir-name1">{{ jsonData.panel_1.path }}</h2>
-        <ul id="files-folders-list-1" path = "{{ jsonData.panel_1.path }}">
-            <li class="list-group-item" id="parent_dir-1" data-type="folder">
+    <div class="panel" id="panel1" path="{{ jsonData.panel_1.path }}">
+        <div class="path-search">
+            <h2 class="main-dir-name" id="main-dir-name1" contenteditable="true">{{ jsonData.panel_1.path }}</h2>
+            <button class="buttons-search" id="go-to-button-1">GO</button>
+        </div>
+        <ul id="files-folders-list-1" path="{{ jsonData.panel_1.path }}">
+            <li class="list-group-item" id="parent_dir-1" data-type="dir">
                 <img src="/static/img/dir.png" alt="dir">
                 <span>..</span>
             </li>
@@ -43,6 +46,8 @@
                     <div class="details">
                         <span class="size">{{ element.size }}</span>
                         <span class="date">{{ element.date }}</span>
+                        <span class="extension">{{ element.extension }}</span>
+
                     </div>
                 </li>
             {% endfor %}
@@ -54,13 +59,16 @@
         <button id="delete-button">Delete</button>
         <button id="rename-button">Rename</button>
         <button id="create-file-button">Create file</button>
-        <button id="create-folder-button">Create folder</button>
+        <button id="create-dir-button">Create folder</button>
         <button id="edit-file-button">Edit file</button>
     </div>
-    <div class="panel" id="panel2">
-        <h2 class="main-dir-name" id="main-dir-name2">{{ jsonData.panel_2.path }}</h2>
-        <ul id="files-folders-list-2" path = "{{ jsonData.panel_2.path }}">
-            <li class="list-group-item" id="parent_dir-2" data-type="folder">
+    <div class="panel" id="panel2" path="{{ jsonData.panel_2.path }}">
+        <div class="path-search">
+            <h2 class="main-dir-name" id="main-dir-name2" contenteditable="true">{{ jsonData.panel_2.path }}</h2>
+            <button class="buttons-search" id="go-to-button-2">GO</button>
+        </div>
+        <ul id="files-folders-list-2" path="{{ jsonData.panel_2.path }}">
+            <li class="list-group-item" id="parent_dir-2" data-type="dir">
                 <img src="/static/img/dir.png" alt="dir">
                 <span>..</span>
             </li>
@@ -71,6 +79,7 @@
                     <div class="details">
                         <span class="size">{{ element.size }}</span>
                         <span class="date">{{ element.date }}</span>
+                        <span class="extension">{{ element.extension }}</span>
                     </div>
                 </li>
             {% endfor %}
@@ -78,12 +87,48 @@
     </div>
 </div>
 <div id="rename-modal" class="modal">
-  <div class="modal-content">
-    <span class="close" id="close-rename-modal">&times;</span>
-      <p id="old-name-rename-modal"></p>
-      <input type="text" id="new-rename-modal" placeholder="New name">
-      <button id="confirm-rename-modal-button">Rename</button>
-  </div>
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="old-name-rename-modal"></p>
+        <input type="text" id="new-rename-modal" placeholder="New name">
+        <button id="confirm-rename-modal-button">Rename</button>
+    </div>
+</div>
+<div id="create-file-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="close-create-file-modal">&times;</span>
+        <input type="text" id="create-file-input" placeholder="File name">
+        <select id="panel-choice-file">
+            <option value="panel1">Panel 1</option>
+            <option value="panel2">Panel 2</option>
+        </select>
+        <button id="confirm-create-file-button">Create file</button>
+
+        </span>
+    </div>
+</div>
+<div id="create-dir-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="close-create-dir-modal">&times;</span>
+        <input type="text" id="create-dir-input" placeholder="Folder name">
+        <select id="panel-choice-dir">
+            <option value="panel1">Panel 1</option>
+            <option value="panel2">Panel 2</option>
+        </select>
+        <button id="confirm-create-dir-button">Create folder</button>
+
+        </span>
+    </div>
+</div>
+<div id="edit-file-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="close-edit-file-modal">&times;</span>
+        <p id="edit-file-name"></p>
+        <div id="edit-file-content" contenteditable="true">
+
+        </div>
+        <button id="confirm-edit-file-modal-button">Confirm edit file</button>
+    </div>
 </div>
 </body>
 <script src="{{ url_for('static', filename='js/index.js') }}"></script>

@@ -1,5 +1,4 @@
 
-/* The Modal (hidden by default) */
 .modal {
   display: none;
   position: fixed;
@@ -12,7 +11,6 @@
   background-color: rgba(0,0,0,0.4);
 }
 
-/* Modal Content/Box */
 .modal-content {
   align-content: center;
   justify-content: center;
@@ -24,7 +22,6 @@
   width: 40%;
 }
 
-/* Close Button */
 .close {
   color: #aaa;
   float: right;
@@ -37,4 +34,29 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background-color: #2D9596;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+select option {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #2D9596;
+    color: #fff;
+    font-size: 16px;
+}
+
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  box-sizing: border-box;
 }

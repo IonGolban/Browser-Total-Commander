@@ -7,6 +7,8 @@ special_words = {"parent_dir": "..", "current_dir": ".", "Documents and Settings
 
 
 def create_directory(path, directory_name):
+    if os.path.exists(os.path.join(path, directory_name)):
+        raise Exception("Directory already exists")
     try:
         os.mkdir(os.path.join(path, directory_name))
     except Exception as e:
@@ -50,12 +52,13 @@ def get_all_from_path(path):
         if response_el["type"] == "dir":
             print("dir ", element)
             response_el["size"] = "<<DIR>>"
+            response_el["extension"] = ""
         else:
+            response_el["extension"] = os.path.splitext(element)[1][1:].upper()
             response_el["size"] = os.path.getsize(os.path.join(path, element))
 
         response_el["name"] = element
         response_el["path"] = os.path.join(path, element)
-        response_el["size"] = os.path.getsize(os.path.join(path, element))
         response_el["date"] = time.strftime('%m/%d/%Y', time.gmtime(os.path.getmtime(os.path.join(path, element))))
         response_list.append(response_el)
 

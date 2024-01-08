@@ -1,11 +1,10 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 * {
     box-sizing: border-box;
-    font-family: 'Roboto';
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background: #265073;
@@ -23,6 +22,12 @@ header {
     justify-content: center;
     padding: 20px;
     align-content: flex-start;
+
+    position: fixed;
+    margin-top: 220px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
 }
 
 .buttons button {
@@ -96,7 +101,7 @@ header {
 
 #files-folders-list-1 li span,
 #files-folders-list-2 li span{
-    flex-grow: 1; /* Ocupă spațiul disponibil pentru a fi în centru */
+    flex-grow: 1;
     text-align: center;
     font-weight: bold;
 }
@@ -108,3 +113,46 @@ header {
     display: flex;
     flex-direction: column;
 }
+
+.path-search{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background-color: #2D9596;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.path-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.main-dir-name {
+    padding: 8px;
+    margin-right: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 18px;
+}
+
+.buttons-search {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #70b5b6;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    font-size: 16px;
+}
+
+.buttons-search:hover {
+    background-color: #0056b3;
+}
+
+
