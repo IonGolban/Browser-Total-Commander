@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module services.dir_service</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="services.html"><font color="#ffffff">services</font></a>.dir_service</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href="..">index</a><br><a href="file:c%3A%5Cusers%5Cuig26544%5Cpycharmprojects%5Cbrowser-total-commander%5Cbrowser-total-commander%5Cservices%5Cdir_service.py">c:\users\uig26544\pycharmprojects\browser-total-commander\browser-total-commander\services\dir_service.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-check_path"><strong>check_path</strong></a>(path)</dt><dd><tt>Checks&nbsp;if&nbsp;the&nbsp;given&nbsp;path&nbsp;exists.<br>
+&nbsp;<br>
+:param&nbsp;path:&nbsp;str&nbsp;-&nbsp;The&nbsp;path&nbsp;to&nbsp;check.<br>
+&nbsp;<br>
+:return:&nbsp;bool&nbsp;-&nbsp;True&nbsp;if&nbsp;the&nbsp;path&nbsp;exists,&nbsp;False&nbsp;otherwise.</tt></dd></dl>
+ <dl><dt><a name="-create_directory"><strong>create_directory</strong></a>(path, directory_name)</dt><dd><tt>Creates&nbsp;a&nbsp;new&nbsp;directory&nbsp;within&nbsp;the&nbsp;specified&nbsp;path.<br>
+&nbsp;<br>
+:param&nbsp;path:&nbsp;str&nbsp;-&nbsp;The&nbsp;path&nbsp;to&nbsp;create&nbsp;the&nbsp;new&nbsp;directory.<br>
+:param&nbsp;directory_name:&nbsp;str&nbsp;-&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;new&nbsp;directory&nbsp;to&nbsp;create.<br>
+&nbsp;<br>
+:raises&nbsp;Exception:&nbsp;If&nbsp;the&nbsp;directory&nbsp;already&nbsp;exists&nbsp;or&nbsp;if&nbsp;remove&nbsp;is&nbsp;not&nbsp;possible.<br>
+:return:&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-delete_directory"><strong>delete_directory</strong></a>(path)</dt><dd><tt>Deletes&nbsp;the&nbsp;specified&nbsp;directory.<br>
+&nbsp;<br>
+:param&nbsp;path:&nbsp;str&nbsp;-&nbsp;The&nbsp;path&nbsp;of&nbsp;the&nbsp;directory&nbsp;to&nbsp;delete.<br>
+&nbsp;<br>
+:raises&nbsp;Exception:&nbsp;If&nbsp;the&nbsp;directory&nbsp;does&nbsp;not&nbsp;exist.<br>
+&nbsp;<br>
+:return:&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-get_all_from_dir"><strong>get_all_from_dir</strong></a>(current_main_path, target_dir)</dt><dd><tt>Retrieves&nbsp;a&nbsp;list&nbsp;of&nbsp;elements&nbsp;(files&nbsp;and&nbsp;directories)&nbsp;within&nbsp;a&nbsp;specified&nbsp;directory&nbsp;relative&nbsp;to&nbsp;the&nbsp;current&nbsp;path.<br>
+&nbsp;<br>
+:param&nbsp;current_main_path:&nbsp;str&nbsp;-&nbsp;The&nbsp;current&nbsp;main&nbsp;path.<br>
+:param&nbsp;to_dir:&nbsp;str&nbsp;-&nbsp;The&nbsp;target&nbsp;directory&nbsp;within&nbsp;the&nbsp;current&nbsp;main&nbsp;path.<br>
+&nbsp;<br>
+:raises&nbsp;Exception:&nbsp;If&nbsp;the&nbsp;directory&nbsp;does&nbsp;not&nbsp;exist,&nbsp;or&nbsp;if&nbsp;the&nbsp;path&nbsp;is&nbsp;not&nbsp;a&nbsp;directory,&nbsp;or&nbsp;if&nbsp;permission&nbsp;is&nbsp;denied.<br>
+&nbsp;<br>
+:return:&nbsp;tuple&nbsp;-&nbsp;A&nbsp;tuple&nbsp;containing&nbsp;the&nbsp;updated&nbsp;main&nbsp;path&nbsp;and&nbsp;a&nbsp;list&nbsp;of&nbsp;elements.</tt></dd></dl>
+ <dl><dt><a name="-get_all_from_path"><strong>get_all_from_path</strong></a>(path)</dt><dd><tt>Retrieves&nbsp;a&nbsp;list&nbsp;of&nbsp;elements&nbsp;dictionaries&nbsp;containing&nbsp;information&nbsp;about&nbsp;files&nbsp;and&nbsp;directories&nbsp;in&nbsp;specified&nbsp;path.<br>
+Information&nbsp;about&nbsp;each&nbsp;element:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;type:&nbsp;file&nbsp;or&nbsp;dir<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;name:&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;file&nbsp;or&nbsp;directory<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;path:&nbsp;the&nbsp;path&nbsp;of&nbsp;the&nbsp;file&nbsp;or&nbsp;directory<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;size:&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;file&nbsp;or&nbsp;&lt;&lt;DIR&gt;&gt;&nbsp;if&nbsp;it&nbsp;is&nbsp;a&nbsp;directory<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;extension:&nbsp;the&nbsp;extension&nbsp;of&nbsp;the&nbsp;file&nbsp;or&nbsp;empty&nbsp;string&nbsp;if&nbsp;it&nbsp;is&nbsp;a&nbsp;directory<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;date:&nbsp;the&nbsp;date&nbsp;of&nbsp;the&nbsp;last&nbsp;modification&nbsp;of&nbsp;the&nbsp;file&nbsp;or&nbsp;directory<br>
+&nbsp;<br>
+:param&nbsp;path:&nbsp;str&nbsp;-&nbsp;The&nbsp;path&nbsp;to&nbsp;retrieve&nbsp;elements&nbsp;from.<br>
+&nbsp;<br>
+:return:&nbsp;list&nbsp;-&nbsp;A&nbsp;list&nbsp;of&nbsp;dictionaries&nbsp;containing&nbsp;information&nbsp;about&nbsp;files&nbsp;and&nbsp;directories.</tt></dd></dl>
+ <dl><dt><a name="-get_parent_path"><strong>get_parent_path</strong></a>(path)</dt><dd><tt>Retrieves&nbsp;the&nbsp;parent&nbsp;path&nbsp;of&nbsp;a&nbsp;given&nbsp;path.<br>
+&nbsp;<br>
+:param&nbsp;path:&nbsp;str&nbsp;-&nbsp;The&nbsp;path&nbsp;to&nbsp;get&nbsp;the&nbsp;parent&nbsp;path&nbsp;from.<br>
+&nbsp;<br>
+:return:&nbsp;str&nbsp;-&nbsp;The&nbsp;parent&nbsp;path&nbsp;of&nbsp;the&nbsp;given&nbsp;path.</tt></dd></dl>
+ <dl><dt><a name="-get_start_dir"><strong>get_start_dir</strong></a>()</dt><dd><tt>Retrieves&nbsp;the&nbsp;starting&nbsp;directory.<br>
+It&nbsp;finds&nbsp;the&nbsp;path&nbsp;of&nbsp;the&nbsp;current&nbsp;script&nbsp;and&nbsp;then&nbsp;it&nbsp;goes&nbsp;up&nbsp;until&nbsp;it&nbsp;reaches&nbsp;the&nbsp;root&nbsp;directory.<br>
+&nbsp;<br>
+:return:&nbsp;str&nbsp;-&nbsp;The&nbsp;path&nbsp;of&nbsp;the&nbsp;starting&nbsp;directory.<br>
+&nbsp;<br>
+Example:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-get_start_dir">get_start_dir</a>()</tt></dd></dl>
+ <dl><dt><a name="-rename"><strong>rename</strong></a>(old_name_path, new_name_path)</dt><dd><tt>Renames&nbsp;a&nbsp;file&nbsp;or&nbsp;directory.<br>
+&nbsp;<br>
+:param&nbsp;old_name_path:&nbsp;str&nbsp;-&nbsp;The&nbsp;path&nbsp;of&nbsp;the&nbsp;file&nbsp;or&nbsp;directory&nbsp;to&nbsp;rename.<br>
+:param&nbsp;new_name_path:&nbsp;str&nbsp;-&nbsp;The&nbsp;new&nbsp;name&nbsp;or&nbsp;path&nbsp;of&nbsp;the&nbsp;file&nbsp;or&nbsp;directory.<br>
+&nbsp;<br>
+:return:&nbsp;None</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>special_words</strong> = {'Documents and Settings': 'Users', 'My Documents': 'Documents', 'current_dir': '.', 'parent_dir': '..'}</td></tr></table>
+</body></html>
