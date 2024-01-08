@@ -4,7 +4,7 @@ import json
 
 app = Flask(__name__)
 
-my_test_dir = r"C:\Users\Public\Desktop\garb_files"
+# my_test_dir = r"C:\Users\Public\Desktop\garb_files"
 
 
 @app.route('/')
@@ -19,11 +19,12 @@ def init_page():
     :returns: str: HTML content rendered from 'index.html' template with JSON data for panels.
     """
     try:
-        data = dir_service.get_all_from_path(my_test_dir)
+        start_dir = dir_service.get_start_dir()
+        data = dir_service.get_all_from_path(start_dir)
 
         response_data = {
-            'panel_1': {'path': my_test_dir, 'data': data},
-            'panel_2': {'path': my_test_dir, 'data': data}
+            'panel_1': {'path': start_dir, 'data': data},
+            'panel_2': {'path': start_dir, 'data': data}
         }
 
         print(response_data)
